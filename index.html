@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jessica Taylor | Cybersecurity Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:         #0f172a;
+      --navy-light:   #1e293b;
+      --navy-border:  #334155;
+      --accent:       #3b82f6;
+      --accent-dark:  #2563eb;
+      --accent-light: #93c5fd;
+      --accent-glow:  rgba(59,130,246,0.15);
+      --bg:           #f1f5f9;
+      --bg-white:     #ffffff;
+      --border:       #e2e8f0;
+      --text:         #1e293b;
+      --text-muted:   #64748b;
+      --text-light:   #94a3b8;
+      --green:        #10b981;
+      --radius:       10px;
+      --radius-lg:    16px;
+      --shadow-sm:    0 1px 2px rgba(0,0,0,0.05);
+      --shadow:       0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md:    0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+      --shadow-lg:    0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+      --t:            0.2s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ===== INLINE ICON HELPER ===== */
+    .icon {
+      width: 1em; height: 1em;
+      fill: none; stroke: currentColor;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0; vertical-align: middle;
+    }
+
+    /* ===== NAVIGATION ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: var(--navy);
+      border-bottom: 1px solid var(--navy-border);
+      transition: box-shadow var(--t);
+    }
+    .nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.45); }
+
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-size: 1.05rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+    .nav-logo span { color: var(--accent-light); }
+
+    .nav-links { display: flex; align-items: center; gap: 0.15rem; list-style: none; }
+    .nav-links a {
+      padding: 0.45rem 0.8rem; font-size: 0.85rem; font-weight: 500;
+      color: #94a3b8; border-radius: 6px;
+      transition: color var(--t), background var(--t);
+    }
+    .nav-links a:hover  { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-links a.active { color: var(--accent-light); background: rgba(59,130,246,0.12); }
+
+    .nav-toggle {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 0.5rem; flex-direction: column; gap: 5px;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 2px;
+      background: #fff; border-radius: 2px;
+    }
+    .nav-mobile { display: none; background: var(--navy-light); border-top: 1px solid var(--navy-border); }
+    .nav-mobile.open { display: block; }
+    .nav-mobile a {
+      display: block; padding: 0.875rem 2rem;
+      color: #94a3b8; font-size: 0.9rem; font-weight: 500;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color var(--t), background var(--t);
+    }
+    .nav-mobile a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+    /* ===== SHARED LAYOUT ===== */
+    .section     { padding: 5rem 2rem; }
+    .section-alt { background: var(--bg-white); }
+    .container   { max-width: 1100px; margin: 0 auto; }
+
+    .section-header { margin-bottom: 3rem; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-size: 2rem; font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; line-height: 1.2;
+    }
+    .section-desc {
+      margin-top: 0.65rem; color: var(--text-muted);
+      max-width: 580px; font-size: 0.975rem;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.65rem 1.35rem; border-radius: 8px;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      transition: all var(--t); border: 2px solid transparent;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover {
+      background: var(--accent-dark); transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+    }
+    .btn-outline { background: transparent; color: #94a3b8; border-color: rgba(255,255,255,0.15); }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.35); color: #fff; transform: translateY(-1px); }
+    .btn-download { background: var(--green); color: #fff; font-size: 1rem; padding: 0.85rem 1.75rem; }
+    .btn-download:hover {
+      background: #059669; transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(16,185,129,0.3);
+    }
+
+    /* ===== HERO / ABOUT ===== */
+    .hero {
+      background: linear-gradient(135deg, #070d1a 0%, #0f172a 55%, #131d35 100%);
+      position: relative; overflow: hidden; padding: 5.5rem 2rem;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 55%, rgba(59,130,246,0.1)  0%, transparent 45%),
+        radial-gradient(circle at 82% 20%, rgba(139,92,246,0.07) 0%, transparent 40%);
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 3.5rem; align-items: center; position: relative; z-index: 1;
+    }
+    .hero-photo {
+      width: 220px; height: 220px; border-radius: 50%;
+      object-fit: cover; object-position: center top; flex-shrink: 0;
+      border: 3px solid rgba(59,130,246,0.5);
+      box-shadow: 0 0 0 6px rgba(59,130,246,0.1), 0 20px 60px rgba(0,0,0,0.45);
+    }
+    .hero-greeting {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent-light); margin-bottom: 0.45rem;
+    }
+    .hero-name {
+      font-size: 3rem; font-weight: 800; color: #fff;
+      letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 0.6rem;
+    }
+    .hero-title { font-size: 1.1rem; font-weight: 500; color: #7dd3fc; margin-bottom: 1.25rem; }
+    .hero-bio {
+      font-size: 0.975rem; color: #94a3b8;
+      max-width: 520px; line-height: 1.8; margin-bottom: 1.75rem;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tag { padding: 0.3rem 0.8rem; border-radius: 100px; font-size: 0.78rem; font-weight: 600; }
+    .tag-blue   { background: rgba(59,130,246,0.14); color: #93c5fd; border: 1px solid rgba(59,130,246,0.28); }
+    .tag-green  { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.25); }
+    .tag-purple { background: rgba(139,92,246,0.12); color: #c4b5fd; border: 1px solid rgba(139,92,246,0.25); }
+    .hero-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+    /* ===== CERTIFICATIONS ===== */
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+    .cert-card {
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      box-shadow: var(--shadow); position: relative; overflow: hidden;
+      transition: transform var(--t), box-shadow var(--t);
+    }
+    .cert-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #dc2626, #f97316);
+    }
+    .cert-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+    .cert-badge-area { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.25rem; }
+    .cert-badge-icon {
+      width: 64px; height: 64px; border-radius: 12px; flex-shrink: 0;
+      background: linear-gradient(135deg, #dc2626, #9f1239);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 900; font-size: 0.65rem;
+      text-align: center; line-height: 1.3; letter-spacing: 0.03em;
+    }
+    .cert-info h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .cert-info p  { font-size: 0.8rem; color: var(--text-muted); }
+
+    .cert-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+    .cert-pill {
+      padding: 0.25rem 0.7rem; background: #fef2f2; color: #dc2626;
+      border: 1px solid #fecaca; border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+    }
+    .cert-status { display: flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--green); font-weight: 600; }
+    .cert-status::before { content: ''; width: 7px; height: 7px; background: var(--green); border-radius: 50%; display: block; }
+    .cert-link {
+      font-size: 0.8rem; font-weight: 600; color: var(--accent);
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      transition: color var(--t);
+    }
+    .cert-link:hover { color: var(--accent-dark); }
+
+    .cert-add-card {
+      background: transparent; border: 2px dashed var(--border);
+      border-radius: var(--radius-lg); padding: 2rem;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      color: var(--text-light); min-height: 180px; gap: 0.75rem;
+    }
+    .cert-add-card p { font-size: 0.83rem; line-height: 1.5; }
+
+    /* ===== ACADEMIC WORK ===== */
+    .academic-subsection { margin-bottom: 3.5rem; }
+    .academic-subsection:last-child { margin-bottom: 0; }
+
+    .subsection-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--text);
+      margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--border);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .subsection-title::before {
+      content: ''; display: block; width: 4px; height: 18px;
+      background: var(--accent); border-radius: 2px; flex-shrink: 0;
+    }
+
+    .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1rem; }
+
+    .doc-card {
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.25rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.45rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+    }
+    .doc-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: #cbd5e1; }
+    .doc-course {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.09em; text-transform: uppercase; color: var(--accent);
+    }
+    .doc-title  { font-size: 0.95rem; font-weight: 600; line-height: 1.35; }
+    .doc-skill  { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; flex-grow: 1; }
+    .doc-link {
+      margin-top: 0.6rem; display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.78rem; font-weight: 600; color: var(--accent); transition: color var(--t);
+    }
+    .doc-link:hover { color: var(--accent-dark); }
+
+    /* Law infographics */
+    .law-intro {
+      background: linear-gradient(135deg, #eff6ff, #f0f9ff);
+      border: 1px solid #bfdbfe; border-radius: var(--radius);
+      padding: 1.2rem 1.5rem; margin-bottom: 1.75rem;
+      font-size: 0.9rem; color: #1e40af; line-height: 1.65;
+    }
+    .law-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 1rem; }
+
+    .law-card {
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.4rem 1.1rem 1.1rem;
+      text-align: center; display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem; box-shadow: var(--shadow-sm);
+      transition: transform var(--t), box-shadow var(--t);
+    }
+    .law-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .law-abbr { font-size: 1.3rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+    .law-name { font-size: 0.72rem; color: var(--text-muted); line-height: 1.35; }
+    .law-view {
+      font-size: 0.7rem; font-weight: 700; color: var(--accent);
+      display: flex; align-items: center; gap: 0.25rem; margin-top: 0.2rem;
+      transition: color var(--t);
+    }
+    .law-card:hover .law-view { color: var(--accent-dark); }
+
+    .law-cfaa    { border-top: 3px solid #3b82f6; } .law-cfaa    .law-abbr { color: #2563eb; }
+    .law-hipaa   { border-top: 3px solid #10b981; } .law-hipaa   .law-abbr { color: #059669; }
+    .law-nerc    { border-top: 3px solid #f59e0b; } .law-nerc    .law-abbr { color: #d97706; }
+    .law-nist    { border-top: 3px solid #6366f1; } .law-nist    .law-abbr { color: #4f46e5; }
+    .law-glba    { border-top: 3px solid #8b5cf6; } .law-glba    .law-abbr { color: #7c3aed; }
+    .law-sox     { border-top: 3px solid #f59e0b; } .law-sox     .law-abbr { color: #b45309; }
+    .law-ecpa    { border-top: 3px solid #ec4899; } .law-ecpa    .law-abbr { color: #db2777; }
+    .law-patriot { border-top: 3px solid #ef4444; } .law-patriot .law-abbr { color: #dc2626; font-size: 1rem; }
+
+    /* ===== PROJECTS ===== */
+    .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+
+    .project-card {
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 1.75rem;
+      box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 0.75rem;
+      transition: transform var(--t), box-shadow var(--t);
+    }
+    .project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+
+    .project-card-placeholder {
+      border: 2px dashed var(--border);
+      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+      align-items: center; justify-content: center; text-align: center; min-height: 220px;
+    }
+    .project-placeholder-icon {
+      width: 54px; height: 54px; background: var(--bg); border: 2px solid var(--border);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 0.25rem;
+    }
+    .project-card-placeholder h3 { font-size: 1rem; font-weight: 700; }
+    .project-card-placeholder p  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; max-width: 220px; }
+
+    .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .project-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--accent-glow); border: 1px solid rgba(59,130,246,0.2);
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+    }
+    .project-tags  { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .project-tag   {
+      padding: 0.2rem 0.55rem; background: #f1f5f9; border: 1px solid #e2e8f0;
+      border-radius: 100px; font-size: 0.68rem; font-weight: 600; color: #475569;
+    }
+    .project-title { font-size: 1rem; font-weight: 700; }
+    .project-desc  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+    .project-links { display: flex; gap: 0.75rem; margin-top: auto; padding-top: 0.5rem; }
+    .project-link  {
+      font-size: 0.8rem; font-weight: 600; color: var(--accent);
+      display: inline-flex; align-items: center; gap: 0.3rem; transition: color var(--t);
+    }
+    .project-link:hover { color: var(--accent-dark); }
+
+    /* ===== TRYHACKME ===== */
+    .thm-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+
+    .thm-badge-box {
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 2rem; text-align: center;
+      min-height: 160px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.6rem;
+      box-shadow: var(--shadow); margin-bottom: 1.5rem;
+    }
+    .thm-badge-hint { color: var(--text-light); font-size: 0.82rem; font-style: italic; line-height: 1.5; }
+    .thm-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.75; }
+
+    .thm-writeups-heading { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+    .thm-placeholder {
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-left: 3px solid var(--accent); border-radius: var(--radius);
+      padding: 1.1rem 1.4rem; font-size: 0.875rem; color: var(--text-muted); font-style: italic;
+    }
+    .thm-writeup {
+      background: var(--bg-white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.1rem 1.4rem;
+      display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem;
+      transition: transform var(--t), box-shadow var(--t);
+    }
+    .thm-writeup:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .thm-room  { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+    .thm-title { font-size: 0.95rem; font-weight: 600; }
+    .thm-tags  { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .thm-tag   { padding: 0.15rem 0.5rem; background: rgba(59,130,246,0.08); color: var(--accent); border-radius: 100px; font-size: 0.67rem; font-weight: 600; }
+
+    /* ===== RESUME ===== */
+    .resume-actions { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .resume-note { font-size: 0.83rem; color: var(--text-muted); }
+    .pdf-preview {
+      width: 100%; height: 820px;
+      border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--navy); color: #475569;
+      text-align: center; padding: 2rem 1.5rem; font-size: 0.83rem;
+    }
+    footer a { color: #64748b; transition: color var(--t); }
+    footer a:hover { color: #e2e8f0; }
+    .sep { margin: 0 0.6rem; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 820px) {
+      .thm-layout { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links  { display: none; }
+      .nav-toggle { display: flex; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+      .hero-photo { width: 160px; height: 160px; margin: 0 auto; }
+      .hero-name  { font-size: 2.25rem; }
+      .hero-bio   { margin: 0 auto 1.75rem; }
+      .hero-tags, .hero-links { justify-content: center; }
+      .section-title { font-size: 1.65rem; }
+      .law-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    }
+    @media (max-width: 480px) {
+      .section, .hero { padding: 3rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     NAVIGATION
+================================================================ -->
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <a href="#about" class="nav-logo">Jessica Taylor</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#academic">Academic Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#tryhackme">TryHackMe</a></li>
+      <li><a href="#resume">Resume</a></li>
+    </ul>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="#about">About Me</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#academic">Academic Work</a>
+    <a href="#projects">Projects</a>
+    <a href="#tryhackme">TryHackMe</a>
+    <a href="#resume">Resume</a>
+  </div>
+</nav>
+
+<!-- ================================================================
+     ABOUT ME
+================================================================ -->
+<section class="hero" id="about">
+  <div class="hero-inner">
+    <img src="images/headshot.jpg" alt="Jessica Taylor" class="hero-photo">
+    <div>
+      <p class="hero-greeting">Cybersecurity Professional</p>
+      <h1 class="hero-name">Jessica Taylor</h1>
+      <p class="hero-title">SOC Analyst &nbsp;&middot;&nbsp; IT Support &nbsp;&middot;&nbsp; GRC</p>
+      <p class="hero-bio">
+        Recent B.S. Cybersecurity graduate from Charleston Southern University with hands-on academic
+        experience in network security, risk assessment, physical security, and cybersecurity law.
+        Passionate about defending systems, analyzing threats, and contributing to security-focused
+        teams &mdash; with particular interest in the Charleston,&nbsp;SC area and the defense sector.
+      </p>
+      <div class="hero-tags">
+        <span class="tag tag-blue">B.S. Cybersecurity &mdash; CSU &rsquo;25</span>
+        <span class="tag tag-green">CompTIA Security+</span>
+        <span class="tag tag-purple">Charleston, SC</span>
+      </div>
+      <div class="hero-links">
+        <a href="https://github.com/JessicaTaylor7" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub
+        </a>
+        <a href="#resume" class="btn btn-outline">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          View Resume
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     CERTIFICATIONS
+================================================================ -->
+<section class="section section-alt" id="certifications">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Credentials</p>
+      <h2 class="section-title">Certifications</h2>
+      <p class="section-desc">Industry-recognized credentials validating technical security knowledge and skills.</p>
+    </div>
+
+    <div class="cert-grid">
+
+      <!-- ── CompTIA Security+ ──────────────────────────────── -->
+      <div class="cert-card">
+        <div class="cert-badge-area">
+          <div class="cert-badge-icon">CompTIA<br>Security+<br>SY0-701</div>
+          <div class="cert-info">
+            <h3>CompTIA Security+</h3>
+            <p>CompTIA &middot; Exam SY0-701</p>
+          </div>
+        </div>
+        <div class="cert-meta">
+          <span class="cert-pill">Security+</span>
+          <span class="cert-status">Active</span>
+        </div>
+        <a href="pdf/CompTIA%20Security%2B%20SY0-701.pdf" target="_blank" rel="noopener" class="cert-link">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          View Certificate PDF
+        </a>
+      </div>
+
+      <!--
+      ════════════════════════════════════════════════════════════
+      ADD A CERT: duplicate the .cert-card block above and update
+      the badge text, name, issuer, pill label, and PDF href.
+      ════════════════════════════════════════════════════════════
+      -->
+      <div class="cert-add-card">
+        <svg style="width:30px;height:30px;opacity:0.22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        <p>Additional certifications<br>will appear here</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     ACADEMIC WORK
+================================================================ -->
+<section class="section" id="academic">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Education</p>
+      <h2 class="section-title">Academic Work</h2>
+      <p class="section-desc">Selected coursework, projects, and papers from my B.S. Cybersecurity studies at Charleston Southern University.</p>
+    </div>
+
+    <!-- ── Security Assessment ────────────────────────────── -->
+    <div class="academic-subsection">
+      <h3 class="subsection-title">Security Assessment</h3>
+      <div class="doc-grid">
+        <div class="doc-card">
+          <span class="doc-course">CSCI 433 &mdash; Network Security</span>
+          <p class="doc-title">Physical Security Assessment &amp; Risk Analysis</p>
+          <p class="doc-skill">Applied physical security assessment and risk analysis methodology in a real-world facility context.</p>
+          <a href="pdf/Lab%201%20-%20Security%20Assessment.pdf" target="_blank" rel="noopener" class="doc-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Open PDF
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Presentations ──────────────────────────────────── -->
+    <div class="academic-subsection">
+      <h3 class="subsection-title">Presentations</h3>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <span class="doc-course">CSCI 352</span>
+          <p class="doc-title">Security Presentation</p>
+          <p class="doc-skill">Research and presentation on a core cybersecurity concept or emerging threat landscape.</p>
+          <a href="pdf/CSCI_352_Presentation.pdf" target="_blank" rel="noopener" class="doc-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Open PDF
+          </a>
+        </div>
+
+        <div class="doc-card">
+          <span class="doc-course">CSCI 409</span>
+          <p class="doc-title">Advanced Security Presentation</p>
+          <p class="doc-skill">In-depth technical presentation on advanced cybersecurity topics and professional analysis.</p>
+          <a href="pdf/CSCI_409_Presentation.pdf" target="_blank" rel="noopener" class="doc-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Open PDF
+          </a>
+        </div>
+
+        <div class="doc-card">
+          <span class="doc-course">Independent Research</span>
+          <p class="doc-title">Hackable Medical Devices</p>
+          <p class="doc-skill">Analysis of security vulnerabilities in connected medical devices and implications for patient safety.</p>
+          <a href="pdf/HackableMedicalDevices.pdf" target="_blank" rel="noopener" class="doc-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Open PDF
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Ethics Papers ──────────────────────────────────── -->
+    <div class="academic-subsection">
+      <h3 class="subsection-title">Ethics Papers</h3>
+      <div class="doc-grid">
+
+        <div class="doc-card">
+          <span class="doc-course">CSCI 235</span>
+          <p class="doc-title">Ethics in Computing</p>
+          <p class="doc-skill">Examination of ethical responsibilities, societal impact, and moral frameworks in computer science and cybersecurity.</p>
+          <a href="pdf/CSCI_235_Paper.pdf" target="_blank" rel="noopener" class="doc-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Open PDF
+          </a>
+        </div>
+
+        <div class="doc-card">
+          <span class="doc-course">CSCI 405</span>
+          <p class="doc-title">Ethics in Information Security</p>
+          <p class="doc-skill">Analysis of ethical dilemmas specific to information security practice, disclosure, and professional conduct.</p>
+          <a href="pdf/CSCI_405_Paper.pdf" target="_blank" rel="noopener" class="doc-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Open PDF
+          </a>
+        </div>
+
+        <div class="doc-card">
+          <span class="doc-course">CSCI 332</span>
+          <p class="doc-title">Ethics &amp; Technology Policy</p>
+          <p class="doc-skill">Critical evaluation of technology policy and the ethical implications of security decisions in organizational contexts.</p>
+          <a href="pdf/CSCI_332_Paper.pdf" target="_blank" rel="noopener" class="doc-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Open PDF
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Cybersecurity Law & Compliance ─────────────────── -->
+    <div class="academic-subsection">
+      <h3 class="subsection-title">Cybersecurity Law &amp; Compliance</h3>
+      <p class="law-intro">
+        This gallery of law infographics demonstrates foundational knowledge of cybersecurity and data
+        privacy legislation &mdash; directly relevant to governance, risk, and compliance (GRC) roles.
+        Each card links to a detailed infographic summarizing a major U.S. law or regulatory framework.
+      </p>
+      <div class="law-grid">
+
+        <a href="Infographics/CFAA.pdf" target="_blank" rel="noopener" class="law-card law-cfaa">
+          <div class="law-abbr">CFAA</div>
+          <div class="law-name">Computer Fraud &amp; Abuse Act</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+        <a href="Infographics/HIPAA.pdf" target="_blank" rel="noopener" class="law-card law-hipaa">
+          <div class="law-abbr">HIPAA</div>
+          <div class="law-name">Health Insurance Portability &amp; Accountability Act</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+        <a href="Infographics/NERC%20CIP.pdf" target="_blank" rel="noopener" class="law-card law-nerc">
+          <div class="law-abbr">NERC CIP</div>
+          <div class="law-name">Critical Infrastructure Protection Standards</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+        <a href="Infographics/NIST%20Infographic.pdf" target="_blank" rel="noopener" class="law-card law-nist">
+          <div class="law-abbr">NIST</div>
+          <div class="law-name">NIST Cybersecurity Framework</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+        <a href="Infographics/GLBA.pdf" target="_blank" rel="noopener" class="law-card law-glba">
+          <div class="law-abbr">GLBA</div>
+          <div class="law-name">Gramm-Leach-Bliley Act</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+        <!-- Filename on disk: "SOX Act .pdf" (space before extension) -->
+        <a href="Infographics/SOX%20Act%20.pdf" target="_blank" rel="noopener" class="law-card law-sox">
+          <div class="law-abbr">SOX</div>
+          <div class="law-name">Sarbanes-Oxley Act</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+        <a href="Infographics/ECPA.pdf" target="_blank" rel="noopener" class="law-card law-ecpa">
+          <div class="law-abbr">ECPA</div>
+          <div class="law-name">Electronic Communications Privacy Act</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+        <a href="Infographics/US%20Patriot%20Act.pdf" target="_blank" rel="noopener" class="law-card law-patriot">
+          <div class="law-abbr">USA PATRIOT</div>
+          <div class="law-name">Uniting &amp; Strengthening America Act (2001)</div>
+          <div class="law-view"><svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View</div>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     PROJECTS
+================================================================ -->
+<section class="section section-alt" id="projects">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">Projects</h2>
+      <p class="section-desc">Hands-on technical work including network labs, scripts, and security tools.</p>
+    </div>
+
+    <div class="project-grid">
+
+      <!-- Placeholder — remove once real projects are added -->
+      <div class="project-card project-card-placeholder">
+        <div class="project-placeholder-icon">⚙️</div>
+        <h3>Projects Coming Soon</h3>
+        <p>Network labs, scripts, and security tools in progress.</p>
+      </div>
+
+      <!--
+      ════════════════════════════════════════════════════════════════
+      ADD A PROJECT: copy the block below, uncomment, and fill it in.
+      ════════════════════════════════════════════════════════════════
+
+      <div class="project-card">
+        <div class="project-header">
+          <div class="project-icon">🔐</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Networking</span>
+          </div>
+        </div>
+        <div class="project-title">Project Name Here</div>
+        <div class="project-desc">
+          Brief description of what this project does and what security concepts it demonstrates.
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/JessicaTaylor7/YOUR-REPO" target="_blank" rel="noopener" class="project-link">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+      -->
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     TRYHACKME
+================================================================ -->
+<section class="section" id="tryhackme">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Practical Skills</p>
+      <h2 class="section-title">TryHackMe</h2>
+      <p class="section-desc">Hands-on cybersecurity training through guided labs and real-world attack/defense simulations.</p>
+    </div>
+
+    <div class="thm-layout">
+
+      <div>
+        <div class="thm-badge-box">
+          <!--
+          ══════════════════════════════════════════════════════════
+          PASTE YOUR TRYHACKME BADGE EMBED CODE BELOW THIS LINE.
+          Find it on TryHackMe → your profile → Edit Profile → Badges.
+          Example: <script src="https://tryhackme.com/badge/XXXXXXX"></script>
+          ══════════════════════════════════════════════════════════
+          -->
+          <svg style="width:36px;height:36px;opacity:0.2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+          <p class="thm-badge-hint">TryHackMe badge will appear here.<br>Paste your embed code in the comment above.</p>
+        </div>
+
+        <p class="thm-desc">
+          TryHackMe is a browser-based platform for practising cybersecurity skills through gamified,
+          guided labs. Topics include network security, penetration testing fundamentals, OSINT, SOC
+          analysis workflows, and defensive operations &mdash; directly applicable to Tier&nbsp;1 SOC
+          and IT support roles.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="thm-writeups-heading">Room Write-ups</h3>
+
+        <!-- Remove this placeholder once real write-ups are added -->
+        <div class="thm-placeholder">
+          Write-ups coming soon &mdash; check back as rooms are completed.
+        </div>
+
+        <!--
+        ════════════════════════════════════════════════════════════
+        ADD A WRITE-UP: copy the .thm-writeup block below, uncomment,
+        and fill in the room name, title, and tags.
+        ════════════════════════════════════════════════════════════
+
+        <div class="thm-writeup">
+          <span class="thm-room">Room Name</span>
+          <div class="thm-title">Key Finding or Write-up Title</div>
+          <div class="thm-tags">
+            <span class="thm-tag">Recon</span>
+            <span class="thm-tag">Linux</span>
+          </div>
+        </div>
+        -->
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     RESUME
+================================================================ -->
+<section class="section section-alt" id="resume">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Download</p>
+      <h2 class="section-title">Resume</h2>
+    </div>
+
+    <div class="resume-actions">
+      <!-- Add your resume as pdf/resume.pdf to activate this button -->
+      <a href="pdf/resume.pdf" download="Jessica_Taylor_Resume.pdf" class="btn btn-download">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume (PDF)
+      </a>
+      <span class="resume-note">Downloads as PDF &middot; Last updated 2025</span>
+    </div>
+
+    <!-- Inline preview — displays once pdf/resume.pdf is present -->
+    <iframe
+      src="pdf/resume.pdf"
+      class="pdf-preview"
+      title="Jessica Taylor — Resume"
+      loading="lazy"
+    ></iframe>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <p>
+    Jessica Taylor &copy; 2025
+    <span class="sep">&middot;</span>
+    <a href="https://github.com/JessicaTaylor7" target="_blank" rel="noopener">GitHub</a>
+    <span class="sep">&middot;</span>
+    <a href="mailto:jmptaylor727@gmail.com">jmptaylor727@gmail.com</a>
+  </p>
+</footer>
+
+<script>
+  // Nav shadow on scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 8);
+  }, { passive: true });
+
+  // Mobile nav toggle
+  const toggle    = document.getElementById('nav-toggle');
+  const mobileNav = document.getElementById('nav-mobile');
+  toggle.addEventListener('click', () => {
+    const open = mobileNav.classList.toggle('open');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  mobileNav.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => mobileNav.classList.remove('open'))
+  );
+
+  // Active nav highlight via Intersection Observer
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks  = document.querySelectorAll('.nav-links a');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(a =>
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id)
+        );
+      }
+    });
+  }, { rootMargin: '-25% 0px -65% 0px' });
+  sections.forEach(s => io.observe(s));
+</script>
+
+</body>
+</html>
